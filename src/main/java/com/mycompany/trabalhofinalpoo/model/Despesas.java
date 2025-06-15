@@ -16,6 +16,6 @@ public class Despesas extends Lancamento{
  
    @Override
    public boolean isReceita() {
-    return true;
+    return false;
 }
 }
