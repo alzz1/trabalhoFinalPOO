@@ -9,8 +9,8 @@ import com.mycompany.trabalhofinalpoo.model.Lancamento;
 import com.mycompany.trabalhofinalpoo.model.Receita;
 import com.mycompany.trabalhofinalpoo.model.Despesas;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane; // Required for message boxes
-import java.util.List; // Required for List
+import javax.swing.JOptionPane; 
+import java.util.List;
 
 /**
  *
@@ -21,30 +21,16 @@ public class tela extends javax.swing.JFrame {
   private JDialog telaReceita;
     private JDialog telaDespesa;
     private JDialog telaExtrato;
-    /**
-     * Creates new form tela
-     */
+   
     public tela() {
-     initComponents(); // This calls the NetBeans generated method
+     initComponents(); 
+        jBtDespesa.addActionListener(e -> abrirTelaReceita());
+        jBtReceita.addActionListener(e -> abrirTelaDespesa()); 
+        jBtExtrato.addActionListener(e -> abrirTelaExtrato());
 
-        // The CSV manager is now initialized at declaration, so this line is removed:
-        // gerenciador = new GerenciadorLancamentoCSV();
-
-        // --- Add ActionListeners to the NetBeans-generated main frame buttons here ---
-        // I am mapping them to the dialogs based on their text content (what the user sees).
-        // Based on your initComponents:
-        // jBtDespesa has text "Nova Receita" -> should open Receita dialog
-        // jBtReceita has text "Nova Despesa" -> should open Despesa dialog
-        // jBtExtrato has text "Extrato" -> should open Extrato dialog
-        jBtDespesa.addActionListener(e -> abrirTelaReceita()); // Button "Nova Receita" opens Receita dialog
-        jBtReceita.addActionListener(e -> abrirTelaDespesa()); // Button "Nova Despesa" opens Despesa dialog
-        jBtExtrato.addActionListener(e -> abrirTelaExtrato()); // Button "Extrato" opens Extrato dialog
-
-        // Add action listeners for the "Salvar" buttons inside the dialogs
         jBtSalvarR.addActionListener(e -> salvarReceita());
         jBtSalvarD.addActionListener(e -> salvarDespesa());
 
-        // Add action listeners for the "Sair" buttons inside the dialogs
         jBtSairR.addActionListener(e -> TelaReceita.dispose());
         jBtSairD.addActionListener(e -> TelaDespesa.dispose());
         jBtSairE.addActionListener(e -> TelaExtrato.dispose());
@@ -301,8 +287,8 @@ public class tela extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
   private void abrirTelaReceita() {
-        TelaReceita.pack(); // Adjusts the dialog size to fit its components
-        TelaReceita.setLocationRelativeTo(this); // Centers the dialog relative to the main frame
+        TelaReceita.pack(); 
+        TelaReceita.setLocationRelativeTo(this); 
         TelaReceita.setVisible(true);
     }
 
@@ -313,7 +299,7 @@ public class tela extends javax.swing.JFrame {
     }
 
     private void abrirTelaExtrato() {
-        // Clear previous content
+       
         jTAExtrato.setText("");
         StringBuilder extratoText = new StringBuilder();
         extratoText.append("--- Extrato de Lançamentos ---\n\n");
@@ -341,28 +327,22 @@ public class tela extends javax.swing.JFrame {
         TelaExtrato.setVisible(true);
     }
 
-    // --- Methods to save data ---
     private void salvarReceita() {
         try {
-            // Get data from input fields
+            
             double valor = Double.parseDouble(jTFvalorR.getText());
             String descricao = jTFDescR.getText();
             String categoria = jTFCategoriaR.getText();
             String data = jTFDataR.getText();
 
-            // Get next ID
             int id = gerenciador.getProximoId();
 
-            // Create a new Receita object
             Receita novaReceita = new Receita(id, valor, descricao, categoria, data);
 
-            // Save the launch
             gerenciador.salvarLancamento(novaReceita);
 
-            // Show success message
             JOptionPane.showMessageDialog(this, "Receita salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-            // Clear fields and close dialog
             jTFvalorR.setText("");
             jTFDescR.setText("");
             jTFCategoriaR.setText("");
@@ -372,7 +352,6 @@ public class tela extends javax.swing.JFrame {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Erro: O valor deve ser um número válido.", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException ex) {
-            // Catches validation errors from Lancamento setters (e.g., empty fields, negative value)
             JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar receita: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -382,25 +361,20 @@ public class tela extends javax.swing.JFrame {
 
     private void salvarDespesa() {
         try {
-            // Get data from input fields
+            
             double valor = Double.parseDouble(jTFvalorD.getText());
             String descricao = jTFDescD.getText();
             String categoria = jTFCategoriaD.getText();
             String data = jTFDataD.getText();
 
-            // Get next ID
             int id = gerenciador.getProximoId();
-
-            // Create a new Despesas object
+  
             Despesas novaDespesa = new Despesas(id, valor, descricao, categoria, data);
-
-            // Save the launch
+        
             gerenciador.salvarLancamento(novaDespesa);
-
-            // Show success message
+          
             JOptionPane.showMessageDialog(this, "Despesa salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-            // Clear fields and close dialog
             jTFvalorD.setText("");
             jTFDescD.setText("");
             jTFCategoriaD.setText("");
@@ -410,7 +384,6 @@ public class tela extends javax.swing.JFrame {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Erro: O valor deve ser um número válido.", "Erro de Entrada", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException ex) {
-            // Catches validation errors from Lancamento setters (e.g., empty fields, negative value)
             JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar despesa: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -444,7 +417,6 @@ public class tela extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new tela().setVisible(true);
